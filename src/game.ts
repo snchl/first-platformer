@@ -1,6 +1,10 @@
+import { Knight } from "./classes/character/knight";
+
 export default class Game {
   private canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
+
+  private knight: Knight;
 
   constructor(canvas: HTMLCanvasElement) {
     if (!canvas) {
@@ -13,6 +17,8 @@ export default class Game {
       throw new Error("Context missing");
     }
     this.context = context;
+
+    this.knight = new Knight(this.context);
   }
 
   private get width(): number {
@@ -37,9 +43,13 @@ export default class Game {
     window.requestAnimationFrame((timestamp: number) => this.loop(timestamp));
   }
 
-  public update(timestamp: number): void {}
+  public update(timestamp: number): void {
+    this.knight.update();
+  }
 
   public draw(): void {
     this.clearCanvas();
+
+    this.knight.draw();
   }
 }
